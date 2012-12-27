@@ -1,5 +1,6 @@
 package  
 {
+	import org.flixel.FlxObject;
 	/**
 	 * ...
 	 * @author Rather Fanciful
@@ -14,6 +15,10 @@ package
 		
 		public function activate():void {
 			
+		}
+		
+		public function hit(obj:FlxObject):Boolean {
+			return false;
 		}
 	}
 

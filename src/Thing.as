@@ -24,11 +24,20 @@ package
 		
 		public function Thing(Args:Object) 
 		{
-			var data:Object = Assetr.getData(Assetr.thingDir+Args.name+".json");
+			var data:Object = Assetr.getData(Assetr.thingDir + Args.name + ".json");
+			
+			// flixel
 			super(Args.x?Args.x:0, Args.y?Args.y:0, data.w, data.h);
 			name = data.name;
-			mesh = Assetr.getModel(data.model);
-			mesh.material = Assetr.getMaterial(data.material);
+			
+			// model
+			if(data.model) {
+				mesh = Assetr.getModel(data.model);
+				if(data.material)
+					mesh.material = Assetr.getMaterial(data.material);
+			}
+			
+			// physics
 			if(data.fixed)
 				this.immovable = true;
 			if(data.noclip)

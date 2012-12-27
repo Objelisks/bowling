@@ -78,10 +78,12 @@ package
 			area.preUpdate();
 			
 			// collide stuff
-			FlxG.collide(area.things, area.things);
-			FlxG.overlap(area.triggers, area.things, triggerOverlap);
-			if(area.loaded)
-				FlxG.collide(area.things, area.tiles);
+			//FlxG.collide(area.things, area.things);
+			//FlxG.overlap(area.triggers, area.things, triggerOverlap);
+			//if(area.loaded)
+			//	FlxG.collide(area.things, area.tiles);
+			FlxG.overlap(things, null, FlxObject.separate, overlapper);
+			
 			area.update();
 			
 			area.postUpdate();
@@ -96,12 +98,20 @@ package
 			view.render();
 		}
 		
-		private function triggerOverlap(obj1:FlxObject, obj2:FlxObject):void {
+		// Does class specific collision stuff
+		// Returns whether to separate objects
+		// this function is as an octopus
+		private function overlapper(obj1:FlxObject, obj2:FlxObject):Boolean {
 			if(obj1 is Trigger) {
-				(obj1 as Trigger).trigger(obj2);
-			} else if(obj2 is Trigger) {
-				(obj2 as Trigger).trigger(obj1);
+				return (obj1 as Trigger).hit(obj2);
+			} else if(obj1 is Pickup) {
+				return (obj1 as Pickup).hit(obj2);
+			} else if(obj1 is Item) {
+				return (obj1 as Item).hit(obj2);
 			}
+			
+			// Thing, Tilemap
+			return true;
 		}
 		
 		private function initCamera() : void {

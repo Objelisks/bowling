@@ -9,7 +9,7 @@ package
 	 * See Actions file
 	 * @author Rather Fanciful
 	 */
-	public class Trigger extends FlxObject
+	public class Trigger extends Thing
 	{
 		public var name:String;
 		public var action:Function;
@@ -51,10 +51,12 @@ package
 		}
 		
 		// This gets called for any collisions
-		public function trigger(obj:FlxObject):void {
+		public function hit(obj:FlxObject):Boolean {
 			if(collisionsThisFrame.indexOf(obj) < 0) {
 				collisionsThisFrame.push(obj);
 			}
+			
+			return false;
 		}
 		
 		// Process messages based on what collisions happened

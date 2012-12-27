@@ -2,6 +2,7 @@ package
 {
 	import org.flixel.FlxCamera;
 	import org.flixel.FlxBasic;
+	import org.flixel.FlxObject;
 	/**
 	 * ...
 	 * @author Rather Fanciful
@@ -14,13 +15,14 @@ package
 			super(Args);
 		}
 		
-		override public function overlaps(ObjectOrGroup:FlxBasic, InScreenSpace:Boolean = false, Camera:FlxCamera = null):Boolean 
-		{
-			var hit:Boolean = super.overlaps(ObjectOrGroup, InScreenSpace, Camera);
-			if(hit) {
-				
+		public function hit(obj:FlxObject):Boolean {
+			if(obj is Player) {
+				var player:Player = obj as Player;
+				player.addInventory(this);
+				this.kill();
+				return false;
 			}
-			return hit;
+			return true;
 		}
 	}
 
