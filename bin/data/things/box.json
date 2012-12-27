@@ -1,0 +1,7 @@
+{
+	"name":"Box",
+	"w":100,
+	"h":100,
+	"model":"box.obj",
+	"material":"wood"
+}

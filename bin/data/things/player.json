@@ -1,0 +1,7 @@
+{
+	"name":"Player",
+	"w":100,
+	"h":100,
+	"model":"player.obj",
+	"material":"player"
+}

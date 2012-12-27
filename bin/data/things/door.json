@@ -1,0 +1,7 @@
+{
+	"name":"Door",
+	"w":200,
+	"h":50,
+	"model":"door.obj",
+	"material":"wood"
+}
