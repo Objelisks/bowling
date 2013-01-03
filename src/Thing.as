@@ -1,5 +1,6 @@
 package  
 {
+	import away3d.animators.VertexAnimator;
 	import away3d.core.base.Geometry;
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
@@ -27,12 +28,15 @@ package
 			var data:Object = Assetr.getData(Assetr.thingDir + Args.name + ".json");
 			
 			// flixel
-			super(Args.x?Args.x:0, Args.y?Args.y:0, data.w, data.h);
+			super(Args.x?Args.x:0, Args.y?Args.y:0, Args.w?Args.w:(data.w?data.w:0), Args.h?Args.h:(data.h?data.h:0));
 			name = data.name;
 			
 			// model
 			if(data.model) {
-				mesh = Assetr.getModel(data.model);
+				if(data.anims)
+					mesh = Assetr.getModel(data.model, data.anims);
+				else
+					mesh = Assetr.getModel(data.model);
 				if(data.material)
 					mesh.material = Assetr.getMaterial(data.material);
 			}

@@ -11,10 +11,8 @@ package
 	 */
 	public class Trigger extends Thing
 	{
-		public var name:String;
 		public var action:Function;
 		public var params:Object;
-		public var debugCollision : WireframePlane;
 		
 		public var ids:Object;
 		
@@ -38,7 +36,7 @@ package
 			collisionsLastFrame = new Array();
 			collisionsThisFrame = new Array();
 			
-			super(Args.x, Args.y, Args.w, Args.h);
+			super(Args);
 			
 			immovable = true;
 			moves = false;
@@ -52,6 +50,7 @@ package
 		
 		// This gets called for any collisions
 		public function hit(obj:FlxObject):Boolean {
+			// TODO: Make this a hashmap (faster)
 			if(collisionsThisFrame.indexOf(obj) < 0) {
 				collisionsThisFrame.push(obj);
 			}

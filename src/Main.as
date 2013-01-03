@@ -2,7 +2,8 @@ package
 {
 	import away3d.containers.View3D;
 	import away3d.loaders.AssetLoader;
-	import away3d.loaders.parsers.AWD2Parser;
+	import away3d.loaders.parsers.MD5AnimParser;
+	import away3d.loaders.parsers.MD5MeshParser;
 	import away3d.loaders.parsers.OBJParser;
 	import flash.display.Sprite;
 	import org.flixel.*;
@@ -23,7 +24,9 @@ package
 			// can't see debugger anyways
 			forceDebugger = false;
 			
-			// Enable OBJ parser for loading files later
+			// Enable parser for loading files later
+			AssetLoader.enableParser(MD5AnimParser);
+			AssetLoader.enableParser(MD5MeshParser);
 			AssetLoader.enableParser(OBJParser);
 		}
 		

@@ -9,11 +9,21 @@ package
 	{
 		public function Controller() 
 		{
+			active = true;
+			
 		}
 		
 		override public function update():void 
 		{
 			super.update();
+		}
+		
+		public function enable():void {
+			active = true;
+		}
+		
+		public function disable():void {
+			active = false;
 		}
 		
 	}

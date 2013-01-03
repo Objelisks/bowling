@@ -25,6 +25,9 @@ package
 		// Group of controllers for updating
 		public var controllers:FlxGroup;
 		
+		public var playerInput:PlayerInput;
+		public var editInput:EditInput;
+		
 		// Current active area
 		public var area:Area;
 		
@@ -47,13 +50,15 @@ package
 			
 			FlxG.worldBounds = new FlxRect( -10000, -10000, 20000, 20000);
 			
-			controllers = new FlxGroup();
-			
 			// View will automatically size itself I think
 			view = new View3D();
 			FlxG.view = view;
 			FlxG.stage.addChild(view);
 			view.scene = new Scene3D();
+			
+			controllers = new FlxGroup();
+			editInput = new EditInput();
+			controllers.add(editInput);
 			
 			initCamera();
 			
@@ -72,9 +77,21 @@ package
 		override public function update():void 
 		{
 			super.update();
+			
+			if(FlxG.keys.justPressed("TAB")) {
+				// switch to editmode
+				if(editMode) {
+					editInput.active = true;
+					playerInput.active = false;
+				} else {
+					editInput.active = false;
+					playerInput.active = true;
+				}
+				editMode = !editMode;
+			}
+			
 			controllers.update();
 			
-			// not adding to group because then I'd have to go find it to remove it
 			area.preUpdate();
 			
 			// collide stuff
@@ -82,7 +99,9 @@ package
 			//FlxG.overlap(area.triggers, area.things, triggerOverlap);
 			//if(area.loaded)
 			//	FlxG.collide(area.things, area.tiles);
-			FlxG.overlap(things, null, FlxObject.separate, overlapper);
+			
+			// risqué
+			FlxG.overlap(area.things, null, FlxObject.separate, overlapper);
 			
 			area.update();
 			
@@ -104,8 +123,6 @@ package
 		private function overlapper(obj1:FlxObject, obj2:FlxObject):Boolean {
 			if(obj1 is Trigger) {
 				return (obj1 as Trigger).hit(obj2);
-			} else if(obj1 is Pickup) {
-				return (obj1 as Pickup).hit(obj2);
 			} else if(obj1 is Item) {
 				return (obj1 as Item).hit(obj2);
 			}
@@ -125,7 +142,7 @@ package
 			cameraAlign.offset.setTo(0, 500, -800);
 			area.addThing(player);
 			
-			var playerInput:PlayerInput = new PlayerInput(player);
+			playerInput = new PlayerInput(player);
 			controllers.add(playerInput);
 		}
 		

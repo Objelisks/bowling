@@ -48,12 +48,15 @@ package
 			var data:Object = Assetr.getData(Assetr.areaDir + Name + ".json");
 			
 			idObjs = new Array();
+			this.things = new FlxGroup();
+			this.triggers = new FlxGroup();
+			this.tiles = new Tiles();
+			this.lights = new Array();
 			
 			// Parse terrain data
 			name = data.name;
 			
 			// LET THERE BE LIGHT
-			this.lights = new Array();
 			if(data.lights) {
 				for each(var li:Object in data.lights) {
 					buildLight(li);
@@ -62,13 +65,11 @@ package
 			Assetr.lightPicker.lights = this.lights;
 			
 			// Build the tilemap
-			this.tiles = new Tiles();
 			if(data.tiles) {
 				buildTiles(data);
 			}
 			
 			// Initialize triggers
-			this.triggers = new FlxGroup();
 			if(data.triggers) {
 				for each(var trig:Object in data.triggers) {
 					buildTrigger(trig);
@@ -76,7 +77,6 @@ package
 			}
 			
 			// Initialize things with models
-			this.things = new FlxGroup();
 			if(data.things) {
 				for each(var obj:Object in data.things) {
 					buildObject(obj);
@@ -104,7 +104,8 @@ package
 		private function buildTiles(data:Object):void {
 			trace("-building tiles:");
 			this.tiles.buildMap(data.tiles.join("\n"), Assetr.getMaterial("sand"));
-			trace("--tiles: w: "+ tiles.widthInTiles +" h: "+ tiles.heightInTiles +" c:"+ tiles.totalTiles);
+			trace("--tiles: w: " + tiles.widthInTiles +" h: " + tiles.heightInTiles +" c:" + tiles.totalTiles);
+			this.things.add(tiles);
 		}
 		
 		// Set up the thing (may require special stuff)
@@ -140,6 +141,7 @@ package
 		}
 		
 		// Set up the lights
+		// TODO: lights can be attached to things
 		private function buildLight(data:Object):void {
 			if(data.type == "direct") {
 				var light:DirectionalLight = new DirectionalLight(data.x, data.y, data.z);
@@ -158,7 +160,7 @@ package
 		private function buildTrigger(data:Object):void {
 			var trigger:Trigger = new Trigger(data);
 			trigger.ids = this.idObjs;
-			this.triggers.add(trigger);
+			this.things.add(trigger);
 			FlxG.view.scene.addChild(trigger.debugCollision);
 			
 			if(data.id)

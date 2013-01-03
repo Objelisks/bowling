@@ -38,15 +38,22 @@ package
 			}
 			
 			// attack
-			if(FlxG.keys.pressed("X")) {
-				if(target.primary)
-					target.primary.activate();
+			if(FlxG.keys.justPressed("X")) {
+				// interact
+				// context
 			}
 			
 			// item use
-			if(FlxG.keys.pressed("C")) {
-				if(target.secondary)
-					target.secondary.activate();
+			if(FlxG.keys.justPressed("C")) {
+				target.useItem();
+			}
+			
+			if(FlxG.keys.justPressed("S")) {
+				target.switchItem();
+			}
+			
+			if(FlxG.keys.justPressed("D")) {
+				target.dropItem();
 			}
 			
 			var norm:Number = FlxU.norm(joystick);
