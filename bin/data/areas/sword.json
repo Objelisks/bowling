@@ -17,6 +17,11 @@
 			"id":"door_01",
 			"special":"Door",
 			"x":1300, "y":400
+		},
+		{
+			"name":"sword",
+			"x":1300, "y":800,
+			"special":"items.Sword"
 		}
 	],
 	"lights": [
@@ -29,7 +34,7 @@
 	"triggers": [
 		{
 			"name":"floorswitch",
-			"x":1000,"y":800,
+			"x":1300,"y":400,
 			"w":50,"h":50,
 			"action":"Message",
 			"onStay":["door_01"]
